@@ -1,6 +1,8 @@
 body{
     margin: 0;
     background: #6c7b2a;
+    display: flex;
+    justify-content: center;
 }
 
 .road{

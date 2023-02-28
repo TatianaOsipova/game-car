@@ -3,6 +3,7 @@ body {
     background: #6c7b2a;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 .road {
@@ -19,37 +20,38 @@ body {
 
 .tree {
     position: absolute;
-
 }
 
 .tree1 {
-    width: 250px;
-    transform: translate(-220px, -15vh);
+    width: 362px;
+    transform: translate(-230px, -3vh);
 }
 
 .tree2 {
     width: 300px;
-    transform: translate(-240px, 25vh);
+    transform: translate(-240px, 28vh);
 }
 
 .tree3 {
-    width: 230px;
-    transform: translate(-200px, 70vh);
+    width: 330px;
+    height: 460px;
+    transform: translate(-240px, 62vh);
 }
 
 .tree4 {
-    width: 280px;
-    transform: translate(240px, -5vh);
+    width: 310px;
+    transform: translate(240px, -1vh);
 }
 
 .tree5 {
-    width: 240px;
-    transform: translate(200px, 40vh);
+    width: 330px;
+    transform: translate(250px, 32vh);
 }
 
 .tree6 {
-    width: 270px;
-    transform: translate(210px, 80vh);
+    width: 350px;
+    height: 450px;
+    transform: translate(216px, 58vh);
 }
 
 .game-button {
@@ -63,11 +65,26 @@ body {
     transition: transform .3s ease;
 }
 
-.game-button:hover{
+.game-button:hover {
     transform: scale(1.2);
 }
 
-.game-button img{
+.game-button img {
     width: 60px;
     height: 60px;
+}
+
+.danger {
+    position: absolute;
+    width: 80px;
+}
+
+.coin {
+    position: absolute;
+    width: 50px;
+}
+
+.arrow {
+    position: absolute;
+    width: 50px;
 }

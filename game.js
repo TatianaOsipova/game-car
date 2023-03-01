@@ -7,7 +7,7 @@
     const car = document.querySelector('.car');
     const trees = document.querySelectorAll('.tree');
 
-    const tree1 = trees[0];    
+    const tree1 = trees[0];  
 
     animationId = requestAnimationFrame(startGame);
 
@@ -18,17 +18,20 @@
     } 
     
     function treesAnimation() {
-        const newCoord = getYCoord(tree1) + speed;
+        
+        const newCoord = getCoords(tree1) + speed;
         tree1.style.transform = `translateY(${newCoord}px)`;
     }
     
-    function getYCoord(element) {
+    function getCoords(element) {
         const matrix = window.getComputedStyle(element).transform;
         const array = matrix.split(',');
-        const lastElement = array[array.length - 1];
-        const coordY = parseFloat(lastElement);
+        const y = array[array.length - 1];
+        const x = array[array.length - 2];
+        const numericY = parseFloat(y);
+        const numericX = parseFloat(x);
 
-        return coordY;
+        return { x: numericX, y:numericY};
     }
 
     const gameButton = document.querySelector('.game-button');

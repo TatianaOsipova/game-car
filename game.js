@@ -7,6 +7,15 @@
     const car = document.querySelector('.car');
     const trees = document.querySelectorAll('.tree');
 
+    const treesCoords = {};
+
+    for(let i = 0; i < trees.length; i++) {
+        const tree = trees[i];
+        const coordsTree = getCoords(tree);
+
+        treesCoords.push();
+    }
+
     const tree1 = trees[0];  
     const coordsTree1 = getCoords(tree1);
 
@@ -19,7 +28,12 @@
     } 
     
     function treesAnimation() {
-        const newCoordY = coordsTree1.y + speed;
+        let newCoordY = coordsTree1.y + speed;
+
+        if (newCoordY > window.innerHeight) {
+            newCoordY = -tree1.height;
+        }
+
         coordsTree1.y = newCoordY;
         tree1.style.transform = `translate(${coordsTree1.x}px, ${newCoordY}px)`;
     }

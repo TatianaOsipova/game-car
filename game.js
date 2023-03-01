@@ -8,6 +8,7 @@
     const trees = document.querySelectorAll('.tree');
 
     const tree1 = trees[0];  
+    const coordsTree1 = getCoords(tree1);
 
     animationId = requestAnimationFrame(startGame);
 
@@ -18,9 +19,9 @@
     } 
     
     function treesAnimation() {
-        const coords = getCoords(tree1);
-        const newCoordY = coords.y + speed;
-        tree1.style.transform = `translate(${coords.x}px, ${newCoordY}px)`;
+        const newCoordY = coordsTree1.y + speed;
+        coordsTree1.y = newCoordY;
+        tree1.style.transform = `translate(${coordsTree1.x}px, ${newCoordY}px)`;
     }
     
     function getCoords(element) {

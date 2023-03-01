@@ -7,35 +7,41 @@
     const car = document.querySelector('.car');
     const trees = document.querySelectorAll('.tree');
 
-    const treesCoords = {};
+    const treesCoords = [];
 
     for(let i = 0; i < trees.length; i++) {
         const tree = trees[i];
         const coordsTree = getCoords(tree);
 
-        treesCoords.push();
-    }
-
-    const tree1 = trees[0];  
-    const coordsTree1 = getCoords(tree1);
+        treesCoords.push(coordsTree);
+    }     
 
     animationId = requestAnimationFrame(startGame);
 
     function startGame() {
         treesAnimation();
 
-        animationId =requestAnimationFrame(startGame);
+        // animationId =requestAnimationFrame(startGame);
     } 
     
     function treesAnimation() {
-        let newCoordY = coordsTree1.y + speed;
+        for(let i = 0; i < trees.length; i++) {
+            const tree = trees[i];
+            const coords = treesCoords[i];
 
-        if (newCoordY > window.innerHeight) {
-            newCoordY = -tree1.height;
-        }
+            let newYCoord = coords.y + speed;
 
-        coordsTree1.y = newCoordY;
-        tree1.style.transform = `translate(${coordsTree1.x}px, ${newCoordY}px)`;
+            if (newYCoord > window.innerHeight) {
+                newYCoord = -tree.height;
+            }
+
+            console.log(treesCoords[i]);
+
+            treesCoords[i].y = newYCoord;
+
+            // coordsTree1.y = newYCoord;
+            tree.style.transform = `translate(${coords.x}px, ${newYCoord}px)`;
+        }        
     }
     
     function getCoords(element) {

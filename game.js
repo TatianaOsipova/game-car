@@ -18,9 +18,9 @@
     } 
     
     function treesAnimation() {
-        
-        const newCoord = getCoords(tree1) + speed;
-        tree1.style.transform = `translateY(${newCoord}px)`;
+        const coords = getCoords(tree1);
+        const newCoordY = coords.y + speed;
+        tree1.style.transform = `translate(${coords.x}px, ${newCoordY}px)`;
     }
     
     function getCoords(element) {
@@ -43,6 +43,7 @@
             gameButton.children[1].style.display = 'initial';
         }
         else{
+            animationId =requestAnimationFrame(startGame);
             gameButton.children[0].style.display = 'initial';
             gameButton.children[1].style.display = 'none';
         }

@@ -15,7 +15,7 @@ body {
 .car {
     position: absolute;
     width: 80px;
-    bottom: 0;
+    transform: translateY(75vh);
 }
 
 .tree {
@@ -29,29 +29,29 @@ body {
 
 .tree2 {
     width: 300px;
-    transform: translate(-240px, 28vh);
+    transform: translate(-240px, 35vh);
 }
 
 .tree3 {
     width: 330px;
     height: 460px;
-    transform: translate(-240px, 62vh);
+    transform: translate(-240px, 80vh);
 }
 
 .tree4 {
     width: 310px;
-    transform: translate(240px, -1vh);
+    transform: translate(240px, -10vh);
 }
 
 .tree5 {
     width: 305px;
-    transform: translate(250px, 32vh);
+    transform: translate(250px, 35vh);
 }
 
 .tree6 {
     width: 350px;
     height: 450px;
-    transform: translate(216px, 58vh);
+    transform: translate(216px, 75vh);
 }
 
 .game-button {

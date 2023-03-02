@@ -21,7 +21,7 @@
     function startGame() {
         treesAnimation();
 
-        // animationId =requestAnimationFrame(startGame);
+        animationId =requestAnimationFrame(startGame);
     } 
     
     function treesAnimation() {
@@ -32,7 +32,7 @@
             let newYCoord = coords.y + speed;
 
             if (newYCoord > window.innerHeight) {
-                newYCoord = -tree.height;
+                newYCoord = -370;
             }
 
             console.log(treesCoords[i]);

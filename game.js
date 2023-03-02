@@ -2,7 +2,7 @@
     let isPause = false;
     let animationId = null;
 
-    const speed = 10;
+    const speed = 3;
 
     const car = document.querySelector('.car');
     const trees = document.querySelectorAll('.tree');
@@ -25,15 +25,25 @@
 
     // keydown, keyup, keypress
     document.addEventListener('keydown', (event) => {
-        console.log(event);
+        const code = event.code;
+
+        if (code === 'ArrowUp') {
+
+        }
+        else if (code === 'ArrowDown') {
+
+        }
+        else if (code === 'ArrowLeft') {
+
+        }
+        else if (code === 'ArrowRight') {
+
+        }
     });
 
     document.addEventListener('keyup', (event) => {
-        console.log(event);
-    });
-
-
-    
+        
+    });    
     
 
     animationId = requestAnimationFrame(startGame);
@@ -55,7 +65,7 @@
                 newYCoord = -370;
             }
 
-            console.log(treesCoords[i]);
+            // console.log(treesCoords[i]);
 
             treesCoords[i].y = newYCoord;
 

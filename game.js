@@ -29,6 +29,7 @@
 
         if (code === 'ArrowUp') {
 
+
         }
         else if (code === 'ArrowDown') {
 
@@ -42,9 +43,49 @@
     });
 
     document.addEventListener('keyup', (event) => {
-        
+        const code = event.code;
+
+        if (code === 'ArrowUp') {
+            carMove.top = requestAnimationFrame(carMoveToTop);
+        }
+        else if (code === 'ArrowDown') {
+             carMove.bottom = requestAnimationFrame(carMoveToBottom);
+        }
+        else if (code === 'ArrowLeft') {
+             carMove.left = requestAnimationFrame(carMoveToLeft);
+        }
+        else if (code === 'ArrowRight') {
+             carMove.right = requestAnimationFrame(carMoveToRight);
+        }        
     });    
+
+    function carMoveToTop(){
+        const newY = carCoords.y - 5;
+        carCoords.y = newY;
+        carMove(carCoords.x, newY);
+    }
+
+    function carMoveToBottom(){
+        const newY = carCoords.y + 5;
+        carCoords.y = newY;
+        carMove(carCoords.x, newY);      
+    }
+
+    function carMoveToLeft(){
+        const newX = carCoords.x - 5;
+        carCoords.x = newX;
+        carMove(newX, carCoords.y);      
+    }
+
+    function carMoveToRight(){
+        const newX = carCoords.x + 5;
+        carCoords.x = newX;
+        carMove(newX, carCoords.y);       
+    } 
     
+    function carMove(x, y) {
+        car.style.transform = `translate(${x}px, ${y}px)`;   
+    }
 
     animationId = requestAnimationFrame(startGame);
 

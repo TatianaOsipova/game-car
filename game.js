@@ -2,11 +2,18 @@
     let isPause = false;
     let animationId = null;
 
-    const speed = 3;
+    const speed = 10;
 
     const car = document.querySelector('.car');
     const trees = document.querySelectorAll('.tree');
 
+    const carCoords = getCoords(car);
+    const carMove = {
+        top: null,
+        bottom: null,
+        left: null,
+        right: null,
+    }
     const treesCoords = [];
 
     for(let i = 0; i < trees.length; i++) {
@@ -14,7 +21,20 @@
         const coordsTree = getCoords(tree);
 
         treesCoords.push(coordsTree);
-    }     
+    }  
+
+    // keydown, keyup, keypress
+    document.addEventListener('keydown', (event) => {
+        console.log(event);
+    });
+
+    document.addEventListener('keyup', (event) => {
+        console.log(event);
+    });
+
+
+    
+    
 
     animationId = requestAnimationFrame(startGame);
 

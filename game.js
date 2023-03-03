@@ -5,7 +5,17 @@
     const speed = 3;
 
     const car = document.querySelector('.car');
+    const carWidth = car.clientWidth;
+    const carHeight = car.clientHeight;
+
+    const road = document.querySelector('.road');
+    const roadHeight = road.clientHeight;
+    console.dir(roadHeight);
+
+
     const trees = document.querySelectorAll('.tree');
+
+    console.dir(car);
 
     const carCoords = getCoords(car);
     const carMoveInfo = {
@@ -62,6 +72,10 @@
 
     function carMoveToTop() {
         const newY = carCoords.y - 5;
+
+        if (newY < 0) {
+            return;
+        }
         carCoords.y = newY;
         carMove(carCoords.x, newY);
         carMoveInfo.top = requestAnimationFrame(carMoveToTop);

@@ -139,6 +139,10 @@
         isPause = !isPause;
         if (isPause) {
             cancelAnimationFrame(animationId);
+            cancelAnimationFrame(carMoveInfo.top);
+            cancelAnimationFrame(carMoveInfo.bottom);
+            cancelAnimationFrame(carMoveInfo.left);
+            cancelAnimationFrame(carMoveInfo.right);
             gameButton.children[0].style.display = 'none';
             gameButton.children[1].style.display = 'initial';
         } else {

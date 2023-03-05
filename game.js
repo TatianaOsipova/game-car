@@ -152,11 +152,7 @@
                 newYCoord = -370;
             }
 
-            // console.log(treesCoords[i]);
-
             treesCoords[i].y = newYCoord;
-
-            // coordsTree1.y = newYCoord;
             tree.style.transform = `translate(${coords.x}px, ${newYCoord}px)`;
         }
     }
@@ -182,12 +178,12 @@
             newXCoord = direction === 0 // одинаковый код с ^
                 ? -randomXCoord 
                 : randomXCoord;   
-        }         
-    }
-
-    coinCoord.x = newXCoord;
-    coinCoord.y = newYCoord;
-    coin.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
+        }   
+        
+        coinCoord.x = newXCoord;
+        coinCoord.y = newYCoord;
+        coin.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
+    }    
 
     function getCoords(element) {
         const matrix = window.getComputedStyle(element).transform;

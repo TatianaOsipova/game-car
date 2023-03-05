@@ -6,17 +6,26 @@
 
     const car = document.querySelector('.car');
     const carWidth = car.clientWidth / 2;
-    const carHeight = car.clientHeight;
+    const carHeight = car.clientHeight;    
 
     const coin = document.querySelector('.coin');
     const coinCoord = getCoords(coin);
     const coinWidth = coin.clientWidth / 2;
+
+    const danger = document.querySelector('.danger');
+    const dangerCoord = getCoords(danger);
+    const dangerWidth = danger.clientWidth / 2;   
+
+    const arrow = document.querySelector('.arrow');
+    const arrowCoord = getCoords(arrow);
+    const arrowWidth = arrow.clientWidth / 2;    
 
     const road = document.querySelector('.road');
     const roadHeight = road.clientHeight;
     const roadWidth = road.clientWidth / 2;   
 
     const trees = document.querySelectorAll('.tree');
+    const treesCoords = [];
 
     const carCoords = getCoords(car);
     const carMoveInfo = {
@@ -24,8 +33,8 @@
         bottom: null,
         left: null,
         right: null,
-    }
-    const treesCoords = [];
+    };
+    
 
     for (let i = 0; i < trees.length; i++) {
         const tree = trees[i];
@@ -41,7 +50,7 @@
         }
 
         const code = event.code;
-
+        // WASD
         if (code === 'ArrowUp' && carMoveInfo.top === null) {
             if (carMoveInfo.bottom) {
                 return;
@@ -136,7 +145,9 @@
 
     function startGame() {
         treesAnimation();
-        coinAnimation();
+        elementAnimation(coin, coinCoord, coinWidth, -100);
+        elementAnimation(danger, dangerCoord, dangerWidth, -250);
+        elementAnimation(arrow, arrowCoord, arrowWidth, -600);
 
         animationId = requestAnimationFrame(startGame);
     }
@@ -157,15 +168,99 @@
         }
     }
 
-    function coinAnimation() {
-        let newYCoord = coinCoord.y + speed;
-        let newXCoord = coinCoord.x;
+    // function coinAnimation() {
+    //     let newYCoord = coinCoord.y + speed;
+    //     let newXCoord = coinCoord.x;
+
+    //     if (newYCoord > window.innerHeight) {
+    //         newYCoord = -100;
+
+    //         const direction = parseInt(Math.random() * 2);
+    //         const maxXCoord = (roadWidth + 1 - coinWidth);
+    //         const randomXCoord = parseInt(Math.random() * maxXCoord);
+
+    //         // if (direction === 0) { // двигаем влево
+    //         //     newXCoord = -pandomXCoord;
+    //         // }
+    //         // else if (direction === 1) { // двигаем вправо
+    //         //     newXCoord = pandomXCoord;
+    //         // }
+
+    //         newXCoord = direction === 0 // одинаковый код с ^
+    //             ? -randomXCoord 
+    //             : randomXCoord;   
+    //     }   
+        
+    //     coinCoord.x = newXCoord;
+    //     coinCoord.y = newYCoord;
+    //     coin.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
+    // } 
+    
+    // function dangerAnimation() {
+    //     let newYCoord = dangerCoord.y + speed;
+    //     let newXCoord = dangerCoord.x;
+
+    //     if (newYCoord > window.innerHeight) {
+    //         newYCoord = -250;
+
+    //         const direction = parseInt(Math.random() * 2);
+    //         const maxXCoord = (roadWidth + 1 - dangerWidth);
+    //         const randomXCoord = parseInt(Math.random() * maxXCoord);
+
+    //         // if (direction === 0) { // двигаем влево
+    //         //     newXCoord = -pandomXCoord;
+    //         // }
+    //         // else if (direction === 1) { // двигаем вправо
+    //         //     newXCoord = pandomXCoord;
+    //         // }
+
+    //         newXCoord = direction === 0 // одинаковый код с ^
+    //             ? -randomXCoord 
+    //             : randomXCoord;   
+    //     }   
+        
+    //     dangerCoord.x = newXCoord;
+    //     dangerCoord.y = newYCoord;
+    //     danger.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
+    // }  
+
+    // function arrowAnimation() {
+    //     let newYCoord = arrowCoord.y + speed;
+    //     let newXCoord = arrowCoord.x;
+
+    //     if (newYCoord > window.innerHeight) {
+    //         newYCoord = -600;
+
+    //         const direction = parseInt(Math.random() * 2);
+    //         const maxXCoord = (roadWidth + 1 - arrowWidth);
+    //         const randomXCoord = parseInt(Math.random() * maxXCoord);
+
+    //         // if (direction === 0) { // двигаем влево
+    //         //     newXCoord = -pandomXCoord;
+    //         // }
+    //         // else if (direction === 1) { // двигаем вправо
+    //         //     newXCoord = pandomXCoord;
+    //         // }
+
+    //         newXCoord = direction === 0 // одинаковый код с ^
+    //             ? -randomXCoord 
+    //             : randomXCoord;   
+    //     }   
+        
+    //     arrowCoord.x = newXCoord;
+    //     arrowCoord.y = newYCoord;
+    //     arrow.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
+    // } 
+
+    function elementAnimation(elem, elemCoord, elemWidth, elemInitialYCoord) {
+        let newYCoord = elemCoord.y + speed;
+        let newXCoord = elemCoord.x;
 
         if (newYCoord > window.innerHeight) {
-            newYCoord = -100;
+            newYCoord = elemInitialYCoord;
 
             const direction = parseInt(Math.random() * 2);
-            const maxXCoord = (roadWidth + 1 - coinWidth);
+            const maxXCoord = (roadWidth + 1 - elemWidth);
             const randomXCoord = parseInt(Math.random() * maxXCoord);
 
             // if (direction === 0) { // двигаем влево
@@ -180,9 +275,9 @@
                 : randomXCoord;   
         }   
         
-        coinCoord.x = newXCoord;
-        coinCoord.y = newYCoord;
-        coin.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
+        elemCoord.x = newXCoord;
+        elemCoord.y = newYCoord;
+        elem.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     }    
 
     function getCoords(element) {

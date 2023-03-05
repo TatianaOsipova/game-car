@@ -10,11 +10,11 @@
 
     const coin = document.querySelector('.coin');
     const coinCoord = getCoords(coin);
+    const coinWidth = coin.clientWidth / 2;
 
-    const road = document.querySelector('.road');    
+    const road = document.querySelector('.road');
     const roadHeight = road.clientHeight;
-    const roadWidth = road.clientWidth / 2;
-
+    const roadWidth = road.clientWidth / 2;   
 
     const trees = document.querySelectorAll('.tree');
 
@@ -39,7 +39,7 @@
         if (isPause) {
             return;
         }
-             
+
         const code = event.code;
 
         if (code === 'ArrowUp' && carMoveInfo.top === null) {
@@ -62,7 +62,7 @@
                 return;
             }
             carMoveInfo.right = requestAnimationFrame(carMoveToRight);
-        }            
+        }
     });
 
     document.addEventListener('keyup', (event) => {
@@ -107,7 +107,7 @@
     function carMoveToLeft() {
         const newX = carCoords.x - 5;
 
-        if (newX < - roadWidth + carWidth) {
+        if (newX < -roadWidth + carWidth) {
             return;
         }
 
@@ -136,7 +136,7 @@
 
     function startGame() {
         treesAnimation();
-        coinAnimation ();
+        coinAnimation();
 
         animationId = requestAnimationFrame(startGame);
     }
@@ -161,10 +161,33 @@
         }
     }
 
-    function coinAnimation () {
+    function coinAnimation() {
+        let newYCoord = coinCoord.y + speed;
+        let newXCoord = coinCoord.x;
 
+        if (newYCoord > window.innerHeight) {
+            newYCoord = -100;
 
+            const direction = parseInt(Math.random() * 2);
+            const maxXCoord = (roadWidth + 1 - coinWidth);
+            const randomXCoord = parseInt(Math.random() * maxXCoord);
+
+            // if (direction === 0) { // двигаем влево
+            //     newXCoord = -pandomXCoord;
+            // }
+            // else if (direction === 1) { // двигаем вправо
+            //     newXCoord = pandomXCoord;
+            // }
+
+            newXCoord = direction === 0 // одинаковый код с ^
+                ? -randomXCoord 
+                : randomXCoord;   
+        }         
     }
+
+    coinCoord.x = newXCoord;
+    coinCoord.y = newYCoord;
+    coin.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
 
     function getCoords(element) {
         const matrix = window.getComputedStyle(element).transform;

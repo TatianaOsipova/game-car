@@ -5,36 +5,35 @@
     const speed = 3;
 
     const car = document.querySelector('.car');
+    const carCoords = getCoords(car);
     const carWidth = car.clientWidth / 2;
-    const carHeight = car.clientHeight;    
+    const carHeight = car.clientHeight;  
+    const carMoveInfo = {
+        top: null,
+        bottom: null,
+        left: null,
+        right: null,
+    };  
 
     const coin = document.querySelector('.coin');
     const coinCoord = getCoords(coin);
     const coinWidth = coin.clientWidth / 2;
+    const coinHeight = coin.clientHeight;
 
     const danger = document.querySelector('.danger');
-    const dangerCoord = getCoords(danger);
-    const dangerWidth = danger.clientWidth / 2;   
+    // const dangerCoord = getCoords(danger);
+    // const dangerWidth = danger.clientWidth / 2;   
 
     const arrow = document.querySelector('.arrow');
-    const arrowCoord = getCoords(arrow);
-    const arrowWidth = arrow.clientWidth / 2;    
+    // const arrowCoord = getCoords(arrow);
+    // const arrowWidth = arrow.clientWidth / 2;    
 
     const road = document.querySelector('.road');
     const roadHeight = road.clientHeight;
     const roadWidth = road.clientWidth / 2;   
 
     const trees = document.querySelectorAll('.tree');
-    const treesCoords = [];
-
-    const carCoords = getCoords(car);
-    const carMoveInfo = {
-        top: null,
-        bottom: null,
-        left: null,
-        right: null,
-    };
-    
+    const treesCoords = [];    
 
     for (let i = 0; i < trees.length; i++) {
         const tree = trees[i];
@@ -45,9 +44,9 @@
 
     // keydown, keyup, keypress
     document.addEventListener('keydown', (event) => {
-        if (isPause) {
-            return;
-        }
+        // if (isPause) {
+        //     return;
+        // }
 
         const code = event.code;
         // WASD
@@ -95,9 +94,9 @@
     function carMoveToTop() {
         const newY = carCoords.y - 5;
 
-        if (newY < 0) {
-            return;
-        }
+        // if (newY < 0) {
+        //     return;
+        // }
         carCoords.y = newY;
         carMove(carCoords.x, newY);
         carMoveInfo.top = requestAnimationFrame(carMoveToTop);
@@ -105,9 +104,9 @@
 
     function carMoveToBottom() {
         const newY = carCoords.y + 5;
-        if (newY + carHeight > roadHeight) {
-            return;
-        }
+        // if (newY + carHeight > roadHeight) {
+        //     return;
+        // }
         carCoords.y = newY;
         carMove(carCoords.x, newY);
         carMoveInfo.bottom = requestAnimationFrame(carMoveToBottom);
@@ -116,9 +115,9 @@
     function carMoveToLeft() {
         const newX = carCoords.x - 5;
 
-        if (newX < -roadWidth + carWidth) {
-            return;
-        }
+        // if (newX < -roadWidth + carWidth) {
+        //     return;
+        // }
 
         carCoords.x = newX;
         carMove(newX, carCoords.y);
@@ -128,9 +127,9 @@
     function carMoveToRight() {
         const newX = carCoords.x + 5;
 
-        if (newX > roadWidth - carWidth) {
-            return;
-        }
+        // if (newX > roadWidth - carWidth) {
+        //     return;
+        // }
 
         carCoords.x = newX;
         carMove(newX, carCoords.y);
@@ -146,8 +145,8 @@
     function startGame() {
         treesAnimation();
         elementAnimation(coin, coinCoord, coinWidth, -100);
-        elementAnimation(danger, dangerCoord, dangerWidth, -250);
-        elementAnimation(arrow, arrowCoord, arrowWidth, -600);
+        // elementAnimation(danger, dangerCoord, dangerWidth, -250);
+        // elementAnimation(arrow, arrowCoord, arrowWidth, -600);
 
         animationId = requestAnimationFrame(startGame);
     }
@@ -292,6 +291,19 @@
             x: numericX,
             y: numericY
         };
+    }
+
+    function hasCollision() {
+        const carYTop = carCoords.y;
+        const carYBottom = carCoords.y + carHeight;
+
+        const coinYTop = coinCoord.y;
+        const coinYBottom = coinCoord.y + coinHeight;
+        if (carYTop > coinYBottom || carYBottom < coinYTop) {
+            return false;
+        }
+
+        return true;
     }
 
     const gameButton = document.querySelector('.game-button');

@@ -137,6 +137,7 @@
     }
 
     function carMove(x, y) {
+        console.log(hasCollision());
         car.style.transform = `translate(${x}px, ${y}px)`;
     }
 
@@ -297,9 +298,20 @@
         const carYTop = carCoords.y;
         const carYBottom = carCoords.y + carHeight;
 
+        const carXLeft = carCoords.x - carWidth;
+        const carXRight = carCoords.x + carWidth;
+
         const coinYTop = coinCoord.y;
         const coinYBottom = coinCoord.y + coinHeight;
+
+        const coinXLeft = coinCoord.x - coinWidth;
+        const coinXRight = coinCoord.x + coinWidth;
+
         if (carYTop > coinYBottom || carYBottom < coinYTop) {
+            return false;
+        }
+
+        if (carXLeft > coinXRight || carXRight < coinXLeft) {
             return false;
         }
 

@@ -180,11 +180,12 @@
 
     function startGame() {
         treesAnimation();
-        elementAnimation(coin, coinInfo.coords, coinInfo.width, -100);
+        elementAnimation(coin, coinInfo, -100);
 
-        if (hasCollision(carInfo, coinInfo)) {
+        if (coinInfo.visible && hasCollision(carInfo, coinInfo)) {
             gameScore++;
             coin.style.display = 'none';
+            coinInfo.visible = false;
         }
 
         // elementAnimation(danger, dangerInfo.coords, dangerInfo.width, -250);
@@ -295,15 +296,15 @@
     //     arrow.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     // } 
 
-    function elementAnimation(elem, elemCoord, elemWidth, elemInitialYCoord) {
-        let newYCoord = elemCoord.y + speed;
-        let newXCoord = elemCoord.x;
+    function elementAnimation(elem, elemInfo, elemWidth, elemInitialYCoord) {
+        let newYCoord = elemInfo.coords.y + speed;
+        let newXCoord = elemInfo.coords.x;
 
         if (newYCoord > window.innerHeight) {
             newYCoord = elemInitialYCoord;
 
             const direction = parseInt(Math.random() * 2);
-            const maxXCoord = (roadWidth + 1 - elemWidth);
+            const maxXCoord = (roadWidth + 1 - elemInfo.width);
             const randomXCoord = parseInt(Math.random() * maxXCoord);
 
             // if (direction === 0) { // двигаем влево
@@ -314,6 +315,7 @@
             // }
 
             elem.style.display = 'initial';
+            elemInfo.visible = true;
 
             newXCoord = direction === 0 // одинаковый код с ^
                 ?
@@ -321,8 +323,8 @@
                 randomXCoord;
         }
 
-        elemCoord.x = newXCoord;
-        elemCoord.y = newYCoord;
+        elemInfo.coords.x = newXCoord;
+        elemInfo.coords.y = newYCoord;
         elem.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     }
 

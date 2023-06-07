@@ -2,8 +2,8 @@
     let isPause = false;
     let animationId = null;
 
-    const speed = 3;
-    let gameScore = 0;
+    let speed = 3;
+    let score = 0;
 
     const car = document.querySelector('.car');
 
@@ -58,6 +58,8 @@
     const road = document.querySelector('.road');
     const roadHeight = road.clientHeight;
     const roadWidth = road.clientWidth / 2;
+
+    const gameScore = document.querySelector('.game-score');
 
     const trees = document.querySelectorAll('.tree');
     const treesCoords = [];
@@ -183,9 +185,14 @@
         elementAnimation(coin, coinInfo, -100);
 
         if (coinInfo.visible && hasCollision(carInfo, coinInfo)) {
-            gameScore++;
+            score++;
+            gameScore.innerText = score;
             coin.style.display = 'none';
             coinInfo.visible = false;
+
+            if (score % 3 === 0) {
+                speed += 2;
+            }
         }
 
         // elementAnimation(danger, dangerInfo.coords, dangerInfo.width, -250);
@@ -296,7 +303,7 @@
     //     arrow.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     // } 
 
-    function elementAnimation(elem, elemInfo, elemWidth, elemInitialYCoord) {
+    function elementAnimation(elem, elemInfo, elemInitialYCoord) {
         let newYCoord = elemInfo.coords.y + speed;
         let newXCoord = elemInfo.coords.x;
 

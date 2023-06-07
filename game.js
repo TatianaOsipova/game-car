@@ -3,31 +3,37 @@
     let animationId = null;
 
     const speed = 3;
+    let gameScore = 0;
 
     const car = document.querySelector('.car');
+
     const carInfo = {
-        width: car.clientWidth / 2,
-        height: car.clientHeight,
-        coords: getCoords(car),
+        ...createElementInfo(car),
         move: {
             top: null,
             bottom: null,
             left: null,
             right: null,
-        }        
+        }
     }
 
     const coin = document.querySelector('.coin');
-    const coinInfo = {
-        coords: getCoords(coin),
-        height: coin.clientHeight,
-        width: coin.clientWidth / 2,
-    }
+    const coinInfo = createElementInfo(coin);
+
+    // const dangerInfo = {
+    //     coords: getCoords(coin),
+    //     height: coin.clientHeight,
+    //     width: coin.clientWidth / 2,
+    // }
+
     // const coinInfo.coords = getCoords(coin);
     // const coinInfo.width = oin.clientWidth / 2;
     // const coinInfo.height = coin.clientHeight;
 
     const danger = document.querySelector('.danger');
+    // const dangerInfo = createElementInfo(danger);
+
+
     // const dangerInfo = {
     //     coords: getCoords(danger),
     //     height: danger.clientHeight,
@@ -38,6 +44,8 @@
     // const dangerInfo.width = danger.clientWidth / 2;   
 
     const arrow = document.querySelector('.arrow');
+    // const arrowInfo = createElementInfo(arrow);
+
     // const arrowInfo = {
     //     coords: getCoords(arrow),
     //     height: arrow.clientHeight,
@@ -49,10 +57,10 @@
 
     const road = document.querySelector('.road');
     const roadHeight = road.clientHeight;
-    const roadWidth = road.clientWidth / 2;   
+    const roadWidth = road.clientWidth / 2;
 
     const trees = document.querySelectorAll('.tree');
-    const treesCoords = [];    
+    const treesCoords = [];
 
     for (let i = 0; i < trees.length; i++) {
         const tree = trees[i];
@@ -110,7 +118,14 @@
         }
     });
 
-    function.
+    function createElementInfo(element) {
+        return {
+            coords: getCoords(element),
+            height: element.clientHeight,
+            width: element.clientWidth / 2,
+            visible: true,
+        }
+    }
 
     function carMoveToTop() {
         const newY = carInfo.coords.y - 5;
@@ -158,7 +173,6 @@
     }
 
     function carMove(x, y) {
-        console.log(hasCollision());
         car.style.transform = `translate(${x}px, ${y}px)`;
     }
 
@@ -167,8 +181,16 @@
     function startGame() {
         treesAnimation();
         elementAnimation(coin, coinInfo.coords, coinInfo.width, -100);
+
+        if (hasCollision(carInfo, coinInfo)) {
+            gameScore++;
+            coin.style.display = 'none';
+        }
+
         // elementAnimation(danger, dangerInfo.coords, dangerInfo.width, -250);
         // elementAnimation(arrow, arrowInfo.coords, arrowInfo.width, -600);
+
+        console.log(hasCollision(carInfo, coinInfo));
 
         animationId = requestAnimationFrame(startGame);
     }
@@ -211,12 +233,12 @@
     //             ? -randomXCoord 
     //             : randomXCoord;   
     //     }   
-        
+
     //     coinInfo.coords.x = newXCoord;
     //     coinInfo.coords.y = newYCoord;
     //     coin.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     // } 
-    
+
     // function dangerAnimation() {
     //     let newYCoord = dangerInfo.coords.y + speed;
     //     let newXCoord = dangerInfo.coords.x;
@@ -239,7 +261,7 @@
     //             ? -randomXCoord 
     //             : randomXCoord;   
     //     }   
-        
+
     //     dangerInfo.coords.x = newXCoord;
     //     dangerInfo.coords.y = newYCoord;
     //     danger.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
@@ -267,7 +289,7 @@
     //             ? -randomXCoord 
     //             : randomXCoord;   
     //     }   
-        
+
     //     arrowInfo.coords.x = newXCoord;
     //     arrowInfo.coords.y = newYCoord;
     //     arrow.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
@@ -291,15 +313,18 @@
             //     newXCoord = pandomXCoord;
             // }
 
+            elem.style.display = 'initial';
+
             newXCoord = direction === 0 // одинаковый код с ^
-                ? -randomXCoord 
-                : randomXCoord;   
-        }   
-        
+                ?
+                -randomXCoord :
+                randomXCoord;
+        }
+
         elemCoord.x = newXCoord;
         elemCoord.y = newYCoord;
         elem.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
-    }    
+    }
 
     function getCoords(element) {
         const matrix = window.getComputedStyle(element).transform;
@@ -315,26 +340,19 @@
         };
     }
 
-    function hasCollision(
-        elem1Coords,
-        elem1Width,
-        elem1Height,
-        elem2Coords,
-        elem2Width,
-        elem2Height,
-    ) {
+    function hasCollision(elem1Info, elem2Info) {
 
-        const carYTop = carInfo.coords.y;
-        const carYBottom = carInfo.coords.y + carInfo.height;
+        const carYTop = elem1Info.coords.y;
+        const carYBottom = elem1Info.coords.y + elem1Info.height;
 
-        const carXLeft = carInfo.coords.x - carInfo.width;
-        const carXRight = carInfo.coords.x + carInfo.width;
+        const carXLeft = elem1Info.coords.x - elem1Info.width;
+        const carXRight = elem1Info.coords.x + elem1Info.width;
 
-        const coinYTop = coinInfo.coords.y;
-        const coinYBottom = coinInfo.coords.y + coinInfo.height;
+        const coinYTop = elem2Info.coords.y;
+        const coinYBottom = elem2Info.coords.y + elem2Info.height;
 
-        const coinXLeft = coinInfo.coords.x - coinInfo.width;
-        const coinXRight = coinInfo.coords.x + coinInfo.width;
+        const coinXLeft = elem2Info.coords.x - elem2Info.width;
+        const coinXRight = elem2Info.coords.x + elem2Info.width;
 
         if (carYTop > coinYBottom || carYBottom < coinYTop) {
             return false;

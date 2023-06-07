@@ -295,6 +295,14 @@
     }
 
     function hasCollision() {
+        elem1Coords,
+        elem1Width,
+        elem1Height,
+        elem2Coords,
+        elem2Width,
+        elem2Height,
+
+
         const carYTop = carCoords.y;
         const carYBottom = carCoords.y + carHeight;
 

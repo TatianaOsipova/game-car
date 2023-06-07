@@ -28,13 +28,24 @@
     // const coinInfo.height = coin.clientHeight;
 
     const danger = document.querySelector('.danger');
-    
-    // const dangerCoord = getCoords(danger);
-    // const dangerWidth = danger.clientWidth / 2;   
+    // const dangerInfo = {
+    //     coords: getCoords(danger),
+    //     height: danger.clientHeight,
+    //     width: danger.clientWidth / 2,
+    // }
+
+    // const dangerInfo.coords = getCoords(danger);
+    // const dangerInfo.width = danger.clientWidth / 2;   
 
     const arrow = document.querySelector('.arrow');
-    // const arrowCoord = getCoords(arrow);
-    // const arrowWidth = arrow.clientWidth / 2;    
+    // const arrowInfo = {
+    //     coords: getCoords(arrow),
+    //     height: arrow.clientHeight,
+    //     width: arrow.clientWidth / 2,
+    // }
+
+    // const arrowInfo.coords = getCoords(arrow);
+    // const arrowInfo.width = arrow.clientWidth / 2;    
 
     const road = document.querySelector('.road');
     const roadHeight = road.clientHeight;
@@ -99,6 +110,8 @@
         }
     });
 
+    function.
+
     function carMoveToTop() {
         const newY = carInfo.coords.y - 5;
 
@@ -154,8 +167,8 @@
     function startGame() {
         treesAnimation();
         elementAnimation(coin, coinInfo.coords, coinInfo.width, -100);
-        // elementAnimation(danger, dangerCoord, dangerWidth, -250);
-        // elementAnimation(arrow, arrowCoord, arrowWidth, -600);
+        // elementAnimation(danger, dangerInfo.coords, dangerInfo.width, -250);
+        // elementAnimation(arrow, arrowInfo.coords, arrowInfo.width, -600);
 
         animationId = requestAnimationFrame(startGame);
     }
@@ -205,14 +218,14 @@
     // } 
     
     // function dangerAnimation() {
-    //     let newYCoord = dangerCoord.y + speed;
-    //     let newXCoord = dangerCoord.x;
+    //     let newYCoord = dangerInfo.coords.y + speed;
+    //     let newXCoord = dangerInfo.coords.x;
 
     //     if (newYCoord > window.innerHeight) {
     //         newYCoord = -250;
 
     //         const direction = parseInt(Math.random() * 2);
-    //         const maxXCoord = (roadWidth + 1 - dangerWidth);
+    //         const maxXCoord = (roadWidth + 1 - dangerInfo.width);
     //         const randomXCoord = parseInt(Math.random() * maxXCoord);
 
     //         // if (direction === 0) { // двигаем влево
@@ -227,20 +240,20 @@
     //             : randomXCoord;   
     //     }   
         
-    //     dangerCoord.x = newXCoord;
-    //     dangerCoord.y = newYCoord;
+    //     dangerInfo.coords.x = newXCoord;
+    //     dangerInfo.coords.y = newYCoord;
     //     danger.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     // }  
 
     // function arrowAnimation() {
-    //     let newYCoord = arrowCoord.y + speed;
-    //     let newXCoord = arrowCoord.x;
+    //     let newYCoord = arrowInfo.coords.y + speed;
+    //     let newXCoord = arrowInfo.coords.x;
 
     //     if (newYCoord > window.innerHeight) {
     //         newYCoord = -600;
 
     //         const direction = parseInt(Math.random() * 2);
-    //         const maxXCoord = (roadWidth + 1 - arrowWidth);
+    //         const maxXCoord = (roadWidth + 1 - arrowInfo.width);
     //         const randomXCoord = parseInt(Math.random() * maxXCoord);
 
     //         // if (direction === 0) { // двигаем влево
@@ -255,8 +268,8 @@
     //             : randomXCoord;   
     //     }   
         
-    //     arrowCoord.x = newXCoord;
-    //     arrowCoord.y = newYCoord;
+    //     arrowInfo.coords.x = newXCoord;
+    //     arrowInfo.coords.y = newYCoord;
     //     arrow.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     // } 
 

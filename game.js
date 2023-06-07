@@ -5,15 +5,17 @@
     const speed = 3;
 
     const car = document.querySelector('.car');
-    const carCoords = getCoords(car);
-    const carWidth = car.clientWidth / 2;
-    const carHeight = car.clientHeight;  
-    const carMoveInfo = {
-        top: null,
-        bottom: null,
-        left: null,
-        right: null,
-    };  
+    const carInfo = {
+        width: car.clientWidth / 2,
+        height: car.clientHeight,
+        coords: getCoords(car),
+        move: {
+            top: null,
+            bottom: null,
+            left: null,
+            right: null,
+        }        
+    }
 
     const coin = document.querySelector('.coin');
     const coinCoord = getCoords(coin);
@@ -50,26 +52,26 @@
 
         const code = event.code;
         // WASD
-        if (code === 'ArrowUp' && carMoveInfo.top === null) {
-            if (carMoveInfo.bottom) {
+        if (code === 'ArrowUp' && carInfo.move.top === null) {
+            if (carInfo.move.bottom) {
                 return;
             }
-            carMoveInfo.top = requestAnimationFrame(carMoveToTop);
-        } else if (code === 'ArrowDown' && carMoveInfo.bottom === null) {
-            if (carMoveInfo.top) {
+            carInfo.move.top = requestAnimationFrame(carMoveToTop);
+        } else if (code === 'ArrowDown' && carInfo.move.bottom === null) {
+            if (carInfo.move.top) {
                 return;
             }
-            carMoveInfo.bottom = requestAnimationFrame(carMoveToBottom);
-        } else if (code === 'ArrowLeft' && carMoveInfo.left === null) {
-            if (carMoveInfo.right) {
+            carInfo.move.bottom = requestAnimationFrame(carMoveToBottom);
+        } else if (code === 'ArrowLeft' && carInfo.move.left === null) {
+            if (carInfo.move.right) {
                 return;
             }
-            carMoveInfo.left = requestAnimationFrame(carMoveToLeft);
-        } else if (code === 'ArrowRight' && carMoveInfo.right === null) {
-            if (carMoveInfo.left) {
+            carInfo.move.left = requestAnimationFrame(carMoveToLeft);
+        } else if (code === 'ArrowRight' && carInfo.move.right === null) {
+            if (carInfo.move.left) {
                 return;
             }
-            carMoveInfo.right = requestAnimationFrame(carMoveToRight);
+            carInfo.move.right = requestAnimationFrame(carMoveToRight);
         }
     });
 
@@ -77,63 +79,63 @@
         const code = event.code;
 
         if (code === 'ArrowUp') {
-            cancelAnimationFrame(carMoveInfo.top);
-            carMoveInfo.top = null;
+            cancelAnimationFrame(carInfo.move.top);
+            carInfo.move.top = null;
         } else if (code === 'ArrowDown') {
-            cancelAnimationFrame(carMoveInfo.bottom);
-            carMoveInfo.bottom = null;
+            cancelAnimationFrame(carInfo.move.bottom);
+            carInfo.move.bottom = null;
         } else if (code === 'ArrowLeft') {
-            cancelAnimationFrame(carMoveInfo.left);
-            carMoveInfo.left = null;
+            cancelAnimationFrame(carInfo.move.left);
+            carInfo.move.left = null;
         } else if (code === 'ArrowRight') {
-            cancelAnimationFrame(carMoveInfo.right);
-            carMoveInfo.right = null;
+            cancelAnimationFrame(carInfo.move.right);
+            carInfo.move.right = null;
         }
     });
 
     function carMoveToTop() {
-        const newY = carCoords.y - 5;
+        const newY = carInfo.coords.y - 5;
 
         // if (newY < 0) {
         //     return;
         // }
-        carCoords.y = newY;
-        carMove(carCoords.x, newY);
-        carMoveInfo.top = requestAnimationFrame(carMoveToTop);
+        carInfo.coords.y = newY;
+        carMove(carInfo.coords.x, newY);
+        carInfo.move.top = requestAnimationFrame(carMoveToTop);
     }
 
     function carMoveToBottom() {
-        const newY = carCoords.y + 5;
-        // if (newY + carHeight > roadHeight) {
+        const newY = carInfo.coords.y + 5;
+        // if (newY + carInfo.height > roadHeight) {
         //     return;
         // }
-        carCoords.y = newY;
-        carMove(carCoords.x, newY);
-        carMoveInfo.bottom = requestAnimationFrame(carMoveToBottom);
+        carInfo.coords.y = newY;
+        carMove(carInfo.coords.x, newY);
+        carInfo.move.bottom = requestAnimationFrame(carMoveToBottom);
     }
 
     function carMoveToLeft() {
-        const newX = carCoords.x - 5;
+        const newX = carInfo.coords.x - 5;
 
-        // if (newX < -roadWidth + carWidth) {
+        // if (newX < -roadWidth + carInfo.width) {
         //     return;
         // }
 
-        carCoords.x = newX;
-        carMove(newX, carCoords.y);
-        carMoveInfo.left = requestAnimationFrame(carMoveToLeft);
+        carInfo.coords.x = newX;
+        carMove(newX, carInfo.coords.y);
+        carInfo.move.left = requestAnimationFrame(carMoveToLeft);
     }
 
     function carMoveToRight() {
-        const newX = carCoords.x + 5;
+        const newX = carInfo.coords.x + 5;
 
-        // if (newX > roadWidth - carWidth) {
+        // if (newX > roadWidth - carInfo.width) {
         //     return;
         // }
 
-        carCoords.x = newX;
-        carMove(newX, carCoords.y);
-        carMoveInfo.right = requestAnimationFrame(carMoveToRight);
+        carInfo.coords.x = newX;
+        carMove(newX, carInfo.coords.y);
+        carInfo.move.right = requestAnimationFrame(carMoveToRight);
     }
 
     function carMove(x, y) {
@@ -303,11 +305,11 @@
         elem2Height,
 
 
-        const carYTop = carCoords.y;
-        const carYBottom = carCoords.y + carHeight;
+        const carYTop = carInfo.coords.y;
+        const carYBottom = carInfo.coords.y + carInfo.height;
 
-        const carXLeft = carCoords.x - carWidth;
-        const carXRight = carCoords.x + carWidth;
+        const carXLeft = carInfo.coords.x - carInfo.width;
+        const carXRight = carInfo.coords.x + carInfo.width;
 
         const coinYTop = coinCoord.y;
         const coinYBottom = coinCoord.y + coinHeight;
@@ -331,10 +333,10 @@
         isPause = !isPause;
         if (isPause) {
             cancelAnimationFrame(animationId);
-            cancelAnimationFrame(carMoveInfo.top);
-            cancelAnimationFrame(carMoveInfo.bottom);
-            cancelAnimationFrame(carMoveInfo.left);
-            cancelAnimationFrame(carMoveInfo.right);
+            cancelAnimationFrame(carInfo.move.top);
+            cancelAnimationFrame(carInfo.move.bottom);
+            cancelAnimationFrame(carInfo.move.left);
+            cancelAnimationFrame(carInfo.move.right);
             gameButton.children[0].style.display = 'none';
             gameButton.children[1].style.display = 'initial';
         } else {

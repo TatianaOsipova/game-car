@@ -18,11 +18,17 @@
     }
 
     const coin = document.querySelector('.coin');
-    const coinCoord = getCoords(coin);
-    const coinWidth = coin.clientWidth / 2;
-    const coinHeight = coin.clientHeight;
+    const coinInfo = {
+        coords: getCoords(coin),
+        height: coin.clientHeight,
+        width: coin.clientWidth / 2,
+    }
+    // const coinInfo.coords = getCoords(coin);
+    // const coinInfo.width = oin.clientWidth / 2;
+    // const coinInfo.height = coin.clientHeight;
 
     const danger = document.querySelector('.danger');
+    
     // const dangerCoord = getCoords(danger);
     // const dangerWidth = danger.clientWidth / 2;   
 
@@ -147,7 +153,7 @@
 
     function startGame() {
         treesAnimation();
-        elementAnimation(coin, coinCoord, coinWidth, -100);
+        elementAnimation(coin, coinInfo.coords, coinInfo.width, -100);
         // elementAnimation(danger, dangerCoord, dangerWidth, -250);
         // elementAnimation(arrow, arrowCoord, arrowWidth, -600);
 
@@ -171,14 +177,14 @@
     }
 
     // function coinAnimation() {
-    //     let newYCoord = coinCoord.y + speed;
-    //     let newXCoord = coinCoord.x;
+    //     let newYCoord = coinInfo.coords.y + speed;
+    //     let newXCoord = coinInfo.coords.x;
 
     //     if (newYCoord > window.innerHeight) {
     //         newYCoord = -100;
 
     //         const direction = parseInt(Math.random() * 2);
-    //         const maxXCoord = (roadWidth + 1 - coinWidth);
+    //         const maxXCoord = (roadWidth + 1 - coinInfo.width);
     //         const randomXCoord = parseInt(Math.random() * maxXCoord);
 
     //         // if (direction === 0) { // двигаем влево
@@ -193,8 +199,8 @@
     //             : randomXCoord;   
     //     }   
         
-    //     coinCoord.x = newXCoord;
-    //     coinCoord.y = newYCoord;
+    //     coinInfo.coords.x = newXCoord;
+    //     coinInfo.coords.y = newYCoord;
     //     coin.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
     // } 
     
@@ -296,14 +302,14 @@
         };
     }
 
-    function hasCollision() {
+    function hasCollision(
         elem1Coords,
         elem1Width,
         elem1Height,
         elem2Coords,
         elem2Width,
         elem2Height,
-
+    ) {
 
         const carYTop = carInfo.coords.y;
         const carYBottom = carInfo.coords.y + carInfo.height;
@@ -311,11 +317,11 @@
         const carXLeft = carInfo.coords.x - carInfo.width;
         const carXRight = carInfo.coords.x + carInfo.width;
 
-        const coinYTop = coinCoord.y;
-        const coinYBottom = coinCoord.y + coinHeight;
+        const coinYTop = coinInfo.coords.y;
+        const coinYBottom = coinInfo.coords.y + coinInfo.height;
 
-        const coinXLeft = coinCoord.x - coinWidth;
-        const coinXRight = coinCoord.x + coinWidth;
+        const coinXLeft = coinInfo.coords.x - coinInfo.width;
+        const coinXRight = coinInfo.coords.x + coinInfo.width;
 
         if (carYTop > coinYBottom || carYBottom < coinYTop) {
             return false;

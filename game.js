@@ -31,7 +31,7 @@
     // const coinInfo.height = coin.clientHeight;
 
     const danger = document.querySelector('.danger');
-    // const dangerInfo = createElementInfo(danger);
+    const dangerInfo = createElementInfo(danger);
 
 
     // const dangerInfo = {
@@ -59,7 +59,12 @@
     const roadHeight = road.clientHeight;
     const roadWidth = road.clientWidth / 2;
 
+    const gameButton = document.querySelector('.game-button');
+
     const gameScore = document.querySelector('.game-score');
+    const backdrop = document.querySelector('.backdrop');
+
+    const restartButton = document.querySelector('.restart-button');
 
     const trees = document.querySelectorAll('.tree');
     const treesCoords = [];
@@ -73,9 +78,9 @@
 
     // keydown, keyup, keypress
     document.addEventListener('keydown', (event) => {
-        // if (isPause) {
-        //     return;
-        // }
+        if (isPause) {
+            return;
+        }
 
         const code = event.code;
         // WASD
@@ -132,9 +137,9 @@
     function carMoveToTop() {
         const newY = carInfo.coords.y - 5;
 
-        // if (newY < 0) {
-        //     return;
-        // }
+        if (newY < 0) {
+            return;
+        }
         carInfo.coords.y = newY;
         carMove(carInfo.coords.x, newY);
         carInfo.move.top = requestAnimationFrame(carMoveToTop);
@@ -142,9 +147,9 @@
 
     function carMoveToBottom() {
         const newY = carInfo.coords.y + 5;
-        // if (newY + carInfo.height > roadHeight) {
-        //     return;
-        // }
+        if (newY + carInfo.height > roadHeight) {
+            return;
+        }
         carInfo.coords.y = newY;
         carMove(carInfo.coords.x, newY);
         carInfo.move.bottom = requestAnimationFrame(carMoveToBottom);
@@ -153,9 +158,9 @@
     function carMoveToLeft() {
         const newX = carInfo.coords.x - 5;
 
-        // if (newX < -roadWidth + carInfo.width) {
-        //     return;
-        // }
+        if (newX < -roadWidth + carInfo.width) {
+            return;
+        }
 
         carInfo.coords.x = newX;
         carMove(newX, carInfo.coords.y);
@@ -165,9 +170,9 @@
     function carMoveToRight() {
         const newX = carInfo.coords.x + 5;
 
-        // if (newX > roadWidth - carInfo.width) {
-        //     return;
-        // }
+        if (newX > roadWidth - carInfo.width) {
+            return;
+        }
 
         carInfo.coords.x = newX;
         carMove(newX, carInfo.coords.y);
@@ -181,6 +186,13 @@
     animationId = requestAnimationFrame(startGame);
 
     function startGame() {
+        elementAnimation(danger, dangerInfo, -250);
+
+        if(hasCollision(carInfo, dangerInfo)) {
+            finishGame();
+            return;
+        }
+
         treesAnimation();
         elementAnimation(coin, coinInfo, -100);
 
@@ -195,10 +207,7 @@
             }
         }
 
-        // elementAnimation(danger, dangerInfo.coords, dangerInfo.width, -250);
-        // elementAnimation(arrow, arrowInfo.coords, arrowInfo.width, -600);
-
-        console.log(hasCollision(carInfo, coinInfo));
+        // elementAnimation(arrow, arrowInfo, -600);
 
         animationId = requestAnimationFrame(startGame);
     }
@@ -314,12 +323,12 @@
             const maxXCoord = (roadWidth + 1 - elemInfo.width);
             const randomXCoord = parseInt(Math.random() * maxXCoord);
 
-            // if (direction === 0) { // двигаем влево
-            //     newXCoord = -pandomXCoord;
-            // }
-            // else if (direction === 1) { // двигаем вправо
-            //     newXCoord = pandomXCoord;
-            // }
+            if (direction === 0) { // двигаем влево
+                newXCoord = -randomXCoord;
+            }
+            else if (direction === 1) { // двигаем вправо
+                newXCoord = randomXCoord;
+            }
 
             elem.style.display = 'initial';
             elemInfo.visible = true;
@@ -374,7 +383,20 @@
         return true;
     }
 
-    const gameButton = document.querySelector('.game-button');
+    function finishGame() {
+        cancelAnimationFrame(animationId);
+        cancelAnimationFrame(carInfo.move.top);
+        cancelAnimationFrame(carInfo.move.bottom);
+        cancelAnimationFrame(carInfo.move.left);
+        cancelAnimationFrame(carInfo.move.right);
+        gameScore.style.display = 'none';
+        gameButton.style.display = 'none';
+        backdrop.style.display = 'flex';
+        const scoreText = backdrop.querySelector('.finish-test__score');
+        scoreText.innerHTML = score;
+    }
+
+    
     gameButton.addEventListener('click', () => {
         isPause = !isPause;
         if (isPause) {
@@ -391,4 +413,9 @@
             gameButton.children[1].style.display = 'none';
         }
     });
+
+    restartButton.addEventListener('click', () => {
+        window.location.reload();
+
+    } )
 })();
